@@ -5,19 +5,9 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Sticky Note Shape -->
+    <!-- Lightning Bolt (Power) - Centered -->
     <path
-        android:fillColor="#000000"
-        android:pathData="M25,25 h58 v50 l-8,8 h-50 z" />
-
-    <!-- Folded Corner -->
-    <path
-        android:fillColor="#333333"
-        android:pathData="M75,75 l8,8 v-8 z" />
-
-    <!-- Lightning Bolt (Power) -->
-    <path
-        android:fillColor="#FFF7AB"
-        android:pathData="M54,35 l-10,18 h8 l-4,20 l14,-22 h-8 z" />
+        android:fillColor="#FFC700"
+        android:pathData="M54,26 l-15,27 h12 l-6,30 l21,-33 h-12 z" />
 
 </vector>
