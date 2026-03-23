@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
             onNoteClick = { note -> editNote(note) },
             onNoteLongClick = { note -> deleteNote(note) }
         )
-        binding.notesRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        // Changed spanCount from 2 to 4 to show 4 boxes in a row
+        binding.notesRecyclerView.layoutManager = GridLayoutManager(this, 4)
         binding.notesRecyclerView.adapter = adapter
     }
 
