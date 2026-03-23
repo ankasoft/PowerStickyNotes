@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.stickynotes'
+    namespace 'com.ankasoft.powerstickynotes'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.stickynotes"
+        applicationId "com.ankasoft.powerstickynotes"
         minSdk 21
         targetSdk 34
         versionCode 1
