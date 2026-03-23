@@ -1,74 +1,74 @@
 # 📝 Power Sticky Notes & Pomodoro Dashboard
 
-**Power Sticky Notes**, masanızda duran bir tablet veya telefonu profesyonel bir verimlilik panosuna dönüştüren, minimalistik ve işlevsel bir Android uygulamasıdır. Klasik 3M yapışkan not kağıtlarından ilham alan tasarımıyla notlarınızı gözünüzün önünde tutarken, entegre Pomodoro zamanlayıcısı ile odaklanmanızı sağlar.
+**Power Sticky Notes** is a minimalistic and functional Android application that transforms a tablet or phone on your desk into a professional productivity dashboard. Inspired by classic 3M sticky note designs, it keeps your notes right in front of you while helping you stay focused with an integrated Pomodoro timer.
 
 ---
 
-## ✨ Özellikler
+## ✨ Features
 
-### 📌 Akıllı Yapışkan Notlar
-- **Klasik Tasarım:** 3M yapışkan not kağıdı renginde (Sticky Yellow) nostaljik ve şık görünüm.
-- **Otomatik Yazı Boyutu (Auto-sizing):** Notunuz ister bir kelime ister bir paragraf olsun; metin, kutu boyutuna sığacak şekilde otomatik olarak büyür veya küçülür.
-- **Dinamik Izgara Düzeni:** Yeni notlar sağa eklenir ve satır dolduğunda otomatik olarak bir alt satıra geçer.
-- **Kalıcı Hafıza:** Notlarınız uygulama kapatılsa bile güvenle saklanır.
+### 📌 Smart Sticky Notes
+- **Classic Design:** Nostalgic and stylish look in "Sticky Yellow," inspired by traditional sticky notes.
+- **Auto-sizing Text:** Whether your note is a single word or a paragraph, the text automatically scales to fit the box perfectly.
+- **Dynamic Grid Layout:** New notes are added to the right, automatically wrapping to the next row when the current one is full.
+- **Persistent Storage:** Your notes are securely saved even when the app is closed.
 
-### ⏳ Gelişmiş Pomodoro Zamanlayıcı
-- **Odak & Dinlenme Döngüsü:** 25 dk Çalışma / 5 dk Kısa Mola ve her 4 seans sonunda 15 dk Uzun Mola.
-- **Görsel İlerleme Halkası:** Zaman geçtikçe dolan, şık ve akıcı bir dairesel ilerleme göstergesi.
-- **Sesli Uyarılar:** Seans sonlarında otomatik sesli bildirim.
-- **Kolay Kontroller:** 
-  - **Dokun:** Başlat / Duraklat.
-  - **Uzun Bas:** Tüm döngüyü sıfırla.
-- **Dinamik Renkler:** Çalışma anında "Pomodoro Kırmızısı", mola anında "Not Sarısı" ile görsel geri bildirim.
+### ⏳ Advanced Pomodoro Timer
+- **Focus & Rest Cycles:** 25 min Work / 5 min Short Break and a 15 min Long Break every 4 sessions.
+- **Visual Progress Ring:** A stylish and smooth circular progress indicator that fills up as time passes.
+- **Audio Alerts:** Automatic sound notifications at the end of each session.
+- **Easy Controls:** 
+  - **Tap:** Start / Pause.
+  - **Long Press:** Reset the entire cycle.
+- **Dynamic Colors:** Visual feedback with "Pomodoro Red" during work sessions and "Note Yellow" during breaks.
 
-### 🖥️ "Desk Companion" Modu
-- **Her Zaman Açık Ekran:** Uygulama açıkken cihazın uyku moduna girmesini engeller.
-- **Kilit Ekranı Üzerinde Çalışma:** Çalışırken ekranın kapanması durumunda bile kilit ekranının üzerinde görünebilir.
+### 🖥️ "Desk Companion" Mode
+- **Always-On Screen:** Prevents the device from entering sleep mode while the app is active.
+- **Show Over Lock Screen:** Stays visible even if the screen is locked, ensuring you never lose track of your timer or notes.
 
 ---
 
-## 🚀 Kurulum
+## 🚀 Installation
 
-1. Bu projeyi klonlayın:
+1. Clone this project:
    ```bash
-   git clone https://github.com/vehbiemiroglu/power-sticky-notes.git
+   git clone https://github.com/ankasoft/PowerStickyNotes.git
    ```
-2. **Android Studio**'yu açın ve projeyi içe aktarın.
-3. Projenin `minSdk 21` (Lollipop) veya üzeri bir cihaz/emülatörde çalıştığından emin olun.
-4. `Run` butonuna basarak uygulamayı başlatın.
+2. Open **Android Studio** and import the project.
+3. Ensure the project is running on a device or emulator with `minSdk 21` (Lollipop) or higher.
+4. Press the `Run` button to launch the application.
 
 ---
 
-## 🛠️ Teknik Detaylar
+## 🛠️ Technical Details
 
-- **Dil:** [Kotlin](https://kotlinlang.org/)
+- **Language:** [Kotlin](https://kotlinlang.org/)
 - **UI:** XML Layouts & Material Components 3
-- **Veri Saklama:** SharedPreferences & Gson
-- **Mimari:** ViewBinding & Repository Pattern
+- **Data Storage:** SharedPreferences & Gson
+- **Architecture:** ViewBinding & Repository Pattern
 - **Min SDK:** 21 (Android 5.0)
 
 ---
 
-## 🤝 Katkıda Bulunma
+## 🤝 Contributing
 
-Katkılarınızı bekliyoruz! Eğer bir hata bulursanız veya yeni bir özellik eklemek isterseniz lütfen bir "Issue" açın veya "Pull Request" gönderin.
+Contributions are welcome! If you find a bug or want to add a new feature, please open an Issue or submit a Pull Request.
 
-1. Projeyi Forklayın.
-2. Özellik dalınızı oluşturun (`git checkout -b feature/AmazingFeature`).
-3. Değişikliklerinizi commit edin (`git commit -m 'Add some AmazingFeature'`).
-4. Dalınıza push yapın (`git push origin feature/AmazingFeature`).
-5. Bir Pull Request açın.
-
----
-
-## 📄 Lisans
-
-Bu proje **MIT Lisansı** ile lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına bakabilirsiniz.
+1. Fork the Project.
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the Branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
 ---
 
-## 📧 İletişim
+## 📄 License
+
+This project is licensed under the **MIT License**. See the `LICENSE` file for more details.
+
+---
+
+## 📧 Contact
 
 Vehbi Emiroğlu - [@vehbiemiroglu](https://twitter.com/vehbiemiroglu)
 
-Proje Bağlantısı: [https://github.com/vehbiemiroglu/power-sticky-notes](https://github.com/vehbiemiroglu/power-sticky-notes)
+Project Link: [https://github.com/ankasoft/PowerStickyNotes](https://github.com/ankasoft/PowerStickyNotes)
