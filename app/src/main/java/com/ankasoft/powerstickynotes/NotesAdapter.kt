@@ -2,6 +2,7 @@ package com.ankasoft.powerstickynotes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ankasoft.powerstickynotes.databinding.ItemNoteBinding
 
@@ -35,7 +36,24 @@ class NotesAdapter(
     override fun getItemCount(): Int = notes.size
 
     fun updateNotes(newNotes: List<Note>) {
+        val diffResult = DiffUtil.calculateDiff(NoteDiffCallback(notes, newNotes))
         notes = newNotes
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    private class NoteDiffCallback(
+        private val oldList: List<Note>,
+        private val newList: List<Note>
+    ) : DiffUtil.Callback() {
+        override fun getOldListSize(): Int = oldList.size
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
     }
 }

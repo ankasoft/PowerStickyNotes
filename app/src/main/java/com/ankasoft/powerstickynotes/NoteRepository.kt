@@ -10,6 +10,7 @@ class NoteRepository(context: Context) {
         context.getSharedPreferences("sticky_notes", Context.MODE_PRIVATE)
     private val gson = Gson()
     private val notesKey = "notes_list"
+    private val pomodoroCountKey = "pomodoro_count"
 
     fun getAllNotes(): List<Note> {
         val json = sharedPreferences.getString(notesKey, "[]") ?: "[]"
@@ -36,6 +37,14 @@ class NoteRepository(context: Context) {
         val notes = getAllNotes().toMutableList()
         notes.removeAll { it.id == noteId }
         saveNotes(notes)
+    }
+
+    fun getPomodoroCount(): Int {
+        return sharedPreferences.getInt(pomodoroCountKey, 0)
+    }
+
+    fun savePomodoroCount(count: Int) {
+        sharedPreferences.edit().putInt(pomodoroCountKey, count).apply()
     }
 
     private fun saveNotes(notes: List<Note>) {

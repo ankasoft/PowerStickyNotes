@@ -1,8 +1,10 @@
 package com.ankasoft.powerstickynotes
 
 import android.media.RingtoneManager
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.WindowManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -17,8 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NotesAdapter
 
     private var timer: CountDownTimer? = null
-    private var timeLeftInMillis: Long = 25 * 60 * 1000L
-    private var totalTimeInMillis: Long = 25 * 60 * 1000L
+    private var timeLeftInMillis: Long = TimerPhase.WORK.durationMinutes * 60 * 1000L
+    private var totalTimeInMillis: Long = TimerPhase.WORK.durationMinutes * 60 * 1000L
     private var isTimerRunning = false
     private var pomodoroCount = 0
     private var currentPhase = TimerPhase.WORK
@@ -34,11 +36,66 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setShowWhenLocked()
+
         repository = NoteRepository(this)
+        pomodoroCount = repository.getPomodoroCount()
+
+        if (savedInstanceState != null) {
+            restoreTimerState(savedInstanceState)
+        }
+
         setupRecyclerView()
         setupFAB()
         setupPomodoro()
         loadNotes()
+        updateTimerUI()
+    }
+
+    private fun setShowWhenLocked() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+        } else {
+            @Suppress("DEPRECATION")
+            window.addFlags(
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                        or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+            )
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong(KEY_TIME_LEFT, timeLeftInMillis)
+        outState.putLong(KEY_TOTAL_TIME, totalTimeInMillis)
+        outState.putBoolean(KEY_TIMER_RUNNING, isTimerRunning)
+        outState.putInt(KEY_POMODORO_COUNT, pomodoroCount)
+        outState.putInt(KEY_CURRENT_PHASE, currentPhase.ordinal)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        restoreTimerState(savedInstanceState)
+    }
+
+    private fun restoreTimerState(savedInstanceState: Bundle) {
+        timeLeftInMillis = savedInstanceState.getLong(KEY_TIME_LEFT, TimerPhase.WORK.durationMinutes * 60 * 1000L)
+        totalTimeInMillis = savedInstanceState.getLong(KEY_TOTAL_TIME, TimerPhase.WORK.durationMinutes * 60 * 1000L)
+        isTimerRunning = savedInstanceState.getBoolean(KEY_TIMER_RUNNING, false)
+        pomodoroCount = savedInstanceState.getInt(KEY_POMODORO_COUNT, 0)
+        currentPhase = TimerPhase.entries[savedInstanceState.getInt(KEY_CURRENT_PHASE, 0)]
+
+        if (isTimerRunning) {
+            startTimer()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer?.cancel()
+        timer = null
+        repository.savePomodoroCount(pomodoroCount)
     }
 
     private fun setupRecyclerView() {
@@ -46,7 +103,6 @@ class MainActivity : AppCompatActivity() {
             onNoteClick = { note -> editNote(note) },
             onNoteLongClick = { note -> deleteNote(note) }
         )
-        // Changed spanCount from 2 to 4 to show 4 boxes in a row
         binding.notesRecyclerView.layoutManager = GridLayoutManager(this, 4)
         binding.notesRecyclerView.adapter = adapter
     }
@@ -65,7 +121,7 @@ class MainActivity : AppCompatActivity() {
                 startTimer()
             }
         }
-        
+
         binding.pomodoroCard.setOnLongClickListener {
             resetTimer()
             true
@@ -73,6 +129,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
+        timer?.cancel()
         timer = object : CountDownTimer(timeLeftInMillis, 100) {
             override fun onTick(millisUntilFinished: Long) {
                 timeLeftInMillis = millisUntilFinished
@@ -119,6 +176,7 @@ class MainActivity : AppCompatActivity() {
         when (currentPhase) {
             TimerPhase.WORK -> {
                 pomodoroCount++
+                repository.savePomodoroCount(pomodoroCount)
                 if (pomodoroCount % 4 == 0) {
                     currentPhase = TimerPhase.LONG_BREAK
                 } else {
@@ -176,7 +234,7 @@ class MainActivity : AppCompatActivity() {
         val editText = dialogView.findViewById<EditText>(
             R.id.editNoteText
         )
-        
+
         if (note != null) {
             editText.setText(note.content)
         }
@@ -206,14 +264,14 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
         }
-        
+
         dialog.show()
     }
 
     private fun loadNotes() {
         val notes = repository.getAllNotes()
         adapter.updateNotes(notes)
-        
+
         if (notes.isEmpty()) {
             binding.emptyStateText.visibility = android.view.View.VISIBLE
             binding.notesRecyclerView.visibility = android.view.View.GONE
@@ -221,5 +279,13 @@ class MainActivity : AppCompatActivity() {
             binding.emptyStateText.visibility = android.view.View.GONE
             binding.notesRecyclerView.visibility = android.view.View.VISIBLE
         }
+    }
+
+    companion object {
+        private const val KEY_TIME_LEFT = "key_time_left"
+        private const val KEY_TOTAL_TIME = "key_total_time"
+        private const val KEY_TIMER_RUNNING = "key_timer_running"
+        private const val KEY_POMODORO_COUNT = "key_pomodoro_count"
+        private const val KEY_CURRENT_PHASE = "key_current_phase"
     }
 }
